@@ -36,7 +36,20 @@ class trollBot(irc.IRCClient):
 
         matches = re.search(linuxRegex, msg)
         if matches:
-            self.say(channel, "I would like to interject for a moment. What you're refering to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.\n\nMany computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called 'Linux', and many of its users are not aware that it is basically the GNU system, developed by the GNU Project.\n\nThere really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called 'Linux' distributions are really distributions of GNU/Linux.")
+            self.reply(channel, "I would like to interject for a moment. What you're refering to as Linux, is in fact, GNU/Linux, or as I've recently taken to calling it, GNU plus Linux. Linux is not an operating system unto itself, but rather another free component of a fully functioning GNU system made useful by the GNU corelibs, shell utilities and vital system components comprising a full OS as defined by POSIX.\n\nMany computer users run a modified version of the GNU system every day, without realizing it. Through a peculiar turn of events, the version of GNU which is widely used today is often called 'Linux', and many of its users are not aware that it is basically the GNU system, developed by the GNU Project.\n\nThere really is a Linux, and these people are using it, but it is just a part of the system they use. Linux is the kernel: the program in the system that allocates the machine's resources to the other programs that you run. The kernel is an essential part of an operating system, but useless by itself; it can only function in the context of a complete operating system. Linux is normally used in combination with the GNU operating system: the whole system is basically GNU with Linux added, or GNU/Linux. All the so-called 'Linux' distributions are really distributions of GNU/Linux.")
+
+        matches = re.search(ossRegex, msg)
+        if matches:
+            self.reply(channel, "It looks like you need to read https://gnu.org/philosophy/open-source-misses-the-point.html. Open source is a development model, saying this is does not recomend the political importance of Free Software.")
+
+    def reply(self, channel, message):
+    	# a wrapper for self.say() that makes sure we are utf-8
+
+    	if isinstance(message, unicode):
+    		message = message.encode('utf-8')
+
+    	self.say(channel, message)
+
 
 class trollBotFactory(protocol.ClientFactory):
 	# Mostly boilerplate code here...
@@ -59,11 +72,10 @@ class trollBotFactory(protocol.ClientFactory):
 
 
 if __name__ == '__main__':
-	# stuff that will hopefully soon come from a configuration file
-	channel = "#test"
-	nickname = "trollBot"
-	host = "irc.host.tld"
-	port = 6667
+    nickname = "trollBot"
+    port = 6667
+    host = "irc.host.tld"
+    channel  = "#channel"
 
     # Create factory
     factory = trollBotFactory(channel, nickname)
