@@ -1,0 +1,8 @@
+# Configuration file for trollBot
+
+# protocol information section:
+irc:
+    host: 'irc.host.tld'
+    port: 6667
+    channel: '#channel'
+    nickname: 'trollBot'

@@ -3,6 +3,7 @@
 # This code is licenced as GPL v3. See the LICENCE file.
 
 import re	# regular expressions
+import yaml	# yaml parser
 
 # twisted imports
 from twisted.words.protocols import irc
@@ -72,10 +73,12 @@ class trollBotFactory(protocol.ClientFactory):
 
 
 if __name__ == '__main__':
-    nickname = "trollBot"
-    port = 6667
-    host = "irc.host.tld"
-    channel  = "#channel"
+    # hardcoded filename atleast for now:
+    config = yaml.load(open("trollBot.yaml"))
+    nickname = config['irc']['nickname']
+    port = config['irc']['port']
+    host = config['irc']['host']
+    channel  = config['irc']['channel']
 
     # Create factory
     factory = trollBotFactory(channel, nickname)
